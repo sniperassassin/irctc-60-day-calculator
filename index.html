@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="description"
+        content="Easily calculate when to book IRCTC train tickets with this 60-day advance reservation calculator. Plan your journey and never miss the booking window!">
+    <meta name="keywords"
+        content="IRCTC, train ticket booking, IRCTC 60 day rule, IRCTC booking date calculator, railway reservation, Indian Railways">
+    <meta name="author" content="IRCTC Tools">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="IRCTC 60-Day Booking Date Calculator">
+    <meta property="og:description"
+        content="Get your IRCTC ticket booking date instantly. Select journey date and calculate when to book.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:image" content="https://yourdomain.com/og-image.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IRCTC Booking Date Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="card p-4">
+                    <h3 class="text-center mb-4">IRCTC 60-Day Booking Date Calculator</h3>
+                    <div class="mb-3">
+                        <label for="journeyDate" class="form-label">Select Your Journey Date:</label>
+                        <input type="date" class="form-control" id="journeyDate">
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary" onclick="calculateBookingDate()">Calculate Booking Date</button>
+                    </div>
+                    <div id="result" class="alert alert-info mt-4 d-none"></div>
+                </div>
+                <div class="alert alert-warning mt-3 text-center fw-semibold">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Note: Booking date is based on the train's departure from its origin station, not your boarding
+                    point.
+                </div>
+            </div>
+        </div>
+        <!-- AdSense Ad Below Calculator -->
+        <div class="text-center mt-4">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+                data-ad-slot="xxxxxxxxxx" data-ad-format="auto" data-full-width-responsive="true">
+            </ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <script>
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('journeyDate').setAttribute('min', today);
+
+        function calculateBookingDate() {
+            const input = document.getElementById('journeyDate').value;
+            const result = document.getElementById('result');
+            if (!input) {
+                result.classList.remove('d-none');
+                result.classList.add('alert-danger');
+                result.textContent = 'Please select a valid journey date.';
+                return;
+            }
+
+            const journeyDate = new Date(input);
+            const bookingDate = new Date(journeyDate);
+            bookingDate.setDate(bookingDate.getDate() - 60);
+
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const bookingDateStr = bookingDate.toLocaleDateString(undefined, options);
+
+            const now = new Date();
+            const bookingStarted = bookingDate < now;
+
+            result.classList.remove('d-none', 'alert-danger');
+            result.classList.add('alert-info');
+            result.innerHTML = bookingStarted
+                ? `<strong>Booking already started from:</strong> ${bookingDateStr} at <strong>8:00 AM</strong>`
+                : `<strong>Booking opens on:</strong> ${bookingDateStr} at <strong>8:00 AM</strong>`;
+        }
+    </script>
+</body>
+
+</html>
